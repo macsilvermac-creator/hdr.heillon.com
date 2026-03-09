@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="no">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -820,51 +820,68 @@
     }
 
     function verifyHash() {
-      const input = document.getElementById('hash-input').value.trim().toLowerCase();
-      const resultEl = document.getElementById('verify-result');
+      const raw = document.getElementById('hash-input')?.value?.trim()?.toLowerCase();
+      if (!raw || raw.length === 0) return;
 
-      if (input === CCR03_HASH) {
+      const resultEl = document.getElementById('verify-result');
+      if (!resultEl) return;
+
+      if (raw === CCR03_HASH.toLowerCase()) {
         resultEl.className = 'verify-result valid';
+        resultEl.style.display = 'block';
         resultEl.innerHTML = `
           <div class="result-status">✓ PROOF VERIFIED</div>
-          <div class="result-details">Matched: CCR-03 · Chain: INTACT · Phase: CONSTITUTIONAL_ACTIVE · NLO: 4/5</div>
+          <div class="result-details">
+            Matched: CCR-03 · Chain: INTACT · Phase: CONSTITUTIONAL_ACTIVE · NLO: 4/5
+          </div>
           <button onclick="downloadReport()" class="btn-report">↓ Download verification report</button>
         `;
-      } else if (input.length > 0) {
+      } else {
         resultEl.className = 'verify-result fail';
+        resultEl.style.display = 'block';
         resultEl.innerHTML = `
           <div class="result-status">✗ HASH_NOT_FOUND</div>
           <div class="result-details">This artifact is unknown or has been tampered.</div>
         `;
       }
-      resultEl.style.display = 'block';
     }
 
     function verifyJSON() {
-      const input = document.getElementById('json-input').value.trim();
+      const raw = document.getElementById('json-input')?.value?.trim();
+      if (!raw) return;
+
       const resultEl = document.getElementById('verify-result');
+      if (!resultEl) return;
+
       try {
-        const obj = JSON.parse(input);
-        const hash = (obj.hash || '').toLowerCase();
-        if (hash === CCR03_HASH) {
+        const obj = JSON.parse(raw);
+        const hash = obj.hash?.toLowerCase()?.trim();
+        if (hash === CCR03_HASH.toLowerCase()) {
           resultEl.className = 'verify-result valid';
+          resultEl.style.display = 'block';
           resultEl.innerHTML = `
             <div class="result-status">✓ PROOF VERIFIED</div>
-            <div class="result-details">Matched: CCR-03 · Chain: INTACT · Phase: CONSTITUTIONAL_ACTIVE · NLO: 4/5</div>
+            <div class="result-details">
+              Matched: CCR-03 · Chain: INTACT · Phase: CONSTITUTIONAL_ACTIVE · NLO: 4/5
+            </div>
             <button onclick="downloadReport()" class="btn-report">↓ Download verification report</button>
           `;
         } else {
           resultEl.className = 'verify-result fail';
+          resultEl.style.display = 'block';
           resultEl.innerHTML = `
             <div class="result-status">✗ HASH_MISMATCH</div>
             <div class="result-details">Hash field does not match any known HDR artifact.</div>
           `;
         }
-      } catch (e) {
+      } catch(e) {
         resultEl.className = 'verify-result fail';
-        resultEl.innerHTML = `<div class="result-status">✗ INVALID_JSON</div><div class="result-details">Could not parse JSON input.</div>`;
+        resultEl.style.display = 'block';
+        resultEl.innerHTML = `
+          <div class="result-status">✗ INVALID_JSON</div>
+          <div class="result-details">Could not parse JSON input.</div>
+        `;
       }
-      resultEl.style.display = 'block';
     }
 
     function downloadReport() {
