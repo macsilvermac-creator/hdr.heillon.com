@@ -3,29 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HDR — Heillon Decision Record · The Open Legitimacy Protocol</title>
-  <meta name="description" content="The HDR is the open standard for computable legitimacy. Download a real HDR, verify it, adopt the protocol. Free. Always.">
-  <meta property="og:title" content="HDR — The Open Legitimacy Protocol">
-  <meta property="og:description" content="Download CCR-03 — a real Heillon Decision Record. Verify it. Understand what computable legitimacy means.">
+  <title>HDR v2.0 — Heillon Decision Record · The Open Legitimacy Protocol</title>
+  <meta name="description" content="HDR v2.0: the first cryptographic record that proves Fact + Authority + Normative Context simultaneously. Open protocol. Free forever.">
+  <meta property="og:title" content="HDR v2.0 — Three Dimensions of Legitimacy">
+  <meta property="og:description" content="Fact. Authority. Normative Context. The only decision record that proves all three — sealed, verifiable, forever.">
   <meta property="og:url" content="https://hdr.heillon.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400&family=IBM+Plex+Serif:wght@300;600&display=swap" rel="stylesheet">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "name": "HDR — Heillon Decision Record",
-    "description": "The open standard for computable legitimacy in AI decision-making",
-    "url": "https://hdr.heillon.com",
-    "about": {
-      "@type": "SoftwareApplication",
-      "name": "HEILLON",
-      "url": "https://heillon.com"
-    },
-    "keywords": "HDR, Heillon Decision Record, computable legitimacy, AI audit trail, cryptographic proof, EU AI Act, decision verification"
-  }
-  </script>
   <style>
     :root {
       --void: #080A0E;
@@ -39,8 +24,10 @@
       --seal: #BC8CFF;
       --red: #F85149;
       --gold: #D4A843;
+      --dim1: #3FB950;
+      --dim2: #58A6FF;
+      --dim3: #BC8CFF;
     }
-
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
@@ -52,498 +39,242 @@
       line-height: 1.6;
       font-size: 16px;
     }
-
-    h1, h2, h3 {
-      font-family: 'IBM Plex Serif', Georgia, serif;
-      font-weight: 300;
-    }
-
+    h1, h2, h3 { font-family: 'IBM Plex Serif', Georgia, serif; font-weight: 300; }
     .mono { font-family: 'IBM Plex Mono', monospace; }
     .mono-bold { font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
-
-    a {
-      color: var(--anchor);
-      text-decoration: none;
-    }
+    a { color: var(--anchor); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* Nav */
+    /* NAV */
     .nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 1rem 2rem;
-      background: rgba(8, 10, 14, 0.85);
-      backdrop-filter: blur(12px);
+      background: rgba(8,10,14,0.9); backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      flex-wrap: wrap;
-      gap: 1rem;
+      flex-wrap: wrap; gap: 1rem;
     }
     .nav-brand { display: flex; align-items: baseline; gap: 0.5rem; }
     .nav-brand .logo { color: var(--signal); font-weight: 600; }
     .nav-brand .sub { color: var(--muted); font-size: 0.9rem; }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
+    .nav-brand .badge-v2 {
+      font-size: 0.7rem; background: rgba(240,136,62,0.15);
+      border: 1px solid rgba(240,136,62,0.3); color: var(--signal);
+      padding: 0.1rem 0.4rem; margin-left: 0.5rem;
     }
-    .nav-links a { color: var(--ink); }
+    .nav-links { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .nav-links a { color: var(--ink); font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; }
     .nav-links a.external::after { content: ' ↗'; font-size: 0.75em; }
+    .nav-live {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--proof);
+    }
+    .live-dot { width: 6px; height: 6px; background: var(--proof); border-radius: 50%; animation: pulse-dot 2s ease-in-out infinite; }
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
 
-    /* Hero */
+    /* HERO */
     .hero {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 3rem; max-width: 1200px; margin: 0 auto; padding: 4rem 2rem;
     }
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; }
+    @media(max-width:900px){ .hero { grid-template-columns: 1fr; } }
+    .hero-eyebrow {
+      font-family: 'IBM Plex Mono', monospace; color: var(--signal);
+      font-size: 0.8rem; letter-spacing: 0.1em; margin-bottom: 1rem;
     }
-    .hero-text .eyebrow {
-      font-family: 'IBM Plex Mono', monospace;
-      color: var(--proof);
-      font-size: 0.85rem;
-      letter-spacing: 0.05em;
-      margin-bottom: 1rem;
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.2;
+      margin: 0 0 1.5rem; letter-spacing: -0.02em;
     }
-    .hero-text h1 {
-      font-size: clamp(2.25rem, 5vw, 3.5rem);
-      line-height: 1.2;
-      margin: 0 0 1.5rem;
-      letter-spacing: -0.02em;
+    .hero h1 em { font-style: italic; color: var(--signal); }
+    .hero-subtitle {
+      font-family: 'IBM Plex Serif', serif; font-weight: 300;
+      color: var(--muted); font-size: 1.05rem; max-width: 520px; margin-bottom: 2rem;
     }
-    .hero-text .subtitle {
-      font-family: 'IBM Plex Serif', serif;
-      font-weight: 300;
-      color: var(--muted);
-      font-size: 1.1rem;
-      max-width: 540px;
-      margin-bottom: 2rem;
-    }
-    .hero-buttons {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-bottom: 1rem;
-    }
+    .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
     .btn {
-      display: inline-flex;
-      align-items: center;
+      display: inline-flex; align-items: center;
       padding: 0.75rem 1.25rem;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.9rem;
-      border: none;
-      cursor: pointer;
-      transition: opacity 0.2s;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.875rem;
+      border: none; cursor: pointer; transition: opacity 0.2s; text-decoration: none;
     }
-    .btn:hover { opacity: 0.9; }
-    .btn-primary {
-      background: var(--proof);
-      color: #000;
-    }
-    .btn-secondary {
-      background: transparent;
-      color: var(--proof);
-      border: 1px solid var(--proof);
-    }
-    .hero-note {
-      font-family: 'IBM Plex Mono', monospace;
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
+    .btn:hover { opacity: 0.85; text-decoration: none; }
+    .btn-primary { background: var(--proof); color: #000; }
+    .btn-secondary { background: transparent; color: var(--proof); border: 1px solid var(--proof); }
+    .btn-dim3 { background: transparent; color: var(--dim3); border: 1px solid var(--dim3); }
+    .hero-note { font-family: 'IBM Plex Mono', monospace; color: var(--muted); font-size: 0.8rem; }
 
-    /* Hero card */
-    .hero-card {
-      background: var(--paper);
-      border: 1px solid var(--border);
-      padding: 1.5rem;
-      border-radius: 0;
+    /* 3 DIMENSIONS CARD */
+    .dim-card {
+      background: var(--paper); border: 1px solid var(--border); padding: 1.5rem;
     }
-    .hero-card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+    .dim-card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.5rem;
     }
-    .hero-card-title {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.9rem;
+    .dim-card-title { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+    .dim-badge { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--proof); }
+    .dim-row {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 0.75rem 0; border-bottom: 1px solid var(--border);
     }
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--proof);
-      border-radius: 50%;
-      animation: pulse-dot 2s ease-in-out infinite;
+    .dim-row:last-child { border-bottom: none; }
+    .dim-num {
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
+      padding: 0.15rem 0.4rem; flex-shrink: 0; margin-top: 0.1rem;
     }
-    @keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
-    .hero-card-badge {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.8rem;
-      color: var(--proof);
-    }
-    .hero-card-json {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.8rem;
-      color: var(--muted);
-      background: var(--void);
-      padding: 1rem;
-      overflow-x: auto;
-      margin: 1rem 0;
-    }
-    .hero-card-json .key { color: var(--seal); }
-    .hero-card-json .str { color: var(--proof); }
-    .hero-card-json .num { color: var(--gold); }
-    .hero-card-json .bool { color: var(--signal); }
-    .hero-card-footer {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
+    .dim-num.d1 { background: rgba(63,185,80,0.12); color: var(--dim1); border: 1px solid rgba(63,185,80,0.2); }
+    .dim-num.d2 { background: rgba(88,166,255,0.12); color: var(--dim2); border: 1px solid rgba(88,166,255,0.2); }
+    .dim-num.d3 { background: rgba(188,140,255,0.12); color: var(--dim3); border: 1px solid rgba(188,140,255,0.2); }
+    .dim-content .label { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--ink); }
+    .dim-content .value { font-size: 0.8rem; color: var(--muted); margin-top: 0.15rem; }
+    .dim-footer { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); margin-top: 1rem; }
 
-    /* Section */
-    section {
-      padding: 4rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .section-alt { background: #0A0C10; }
-    .section-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
-      margin-bottom: 0.75rem;
-    }
+    /* SECTIONS */
+    section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
+    .section-full { max-width: none; }
+    .section-alt-bg { background: #0A0C10; }
+    .section-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
     .section-label.proof { color: var(--proof); }
     .section-label.signal { color: var(--signal); }
-    .section-title {
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
-      line-height: 1.3;
-      margin: 0 0 1.5rem;
-      max-width: 700px;
-    }
+    .section-label.dim3 { color: var(--dim3); }
+    .section-title { font-size: clamp(1.75rem, 4vw, 2.5rem); line-height: 1.3; margin: 0 0 1.5rem; max-width: 720px; }
 
-    /* Protocol columns */
-    .protocol-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin: 3rem 0;
-    }
-    @media (max-width: 768px) {
-      .protocol-grid { grid-template-columns: 1fr; }
-    }
-    .protocol-card {
-      border-top: 1px solid var(--border);
-      padding-top: 1.5rem;
-    }
-    .protocol-card h3 {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 1rem;
-      color: var(--ink);
-      margin: 0 0 0.75rem;
-      font-weight: 400;
-    }
-    .protocol-card p {
-      color: var(--muted);
-      font-size: 0.95rem;
-      margin: 0;
-    }
-    .pipeline-line {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 2rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.9rem;
-    }
-    .pipeline-step {
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-      color: var(--muted);
-      cursor: pointer;
-      padding: 0.25rem 0.5rem;
-      border-radius: 2px;
-    }
-    .pipeline-step:hover { color: var(--signal); background: rgba(240, 136, 62, 0.1); }
-    .pipeline-step .letter { color: var(--signal); font-weight: 600; }
-
-    /* Artifact section */
-    .artifact-hash-box {
+    /* 3 DIMENSIONS SECTION */
+    .dim-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin: 2.5rem 0; }
+    @media(max-width:768px){ .dim-grid { grid-template-columns: 1fr; } }
+    .dim-pillar {
+      border-top: 3px solid; padding: 1.5rem;
       background: var(--paper);
-      border: 1px solid var(--proof);
-      padding: 1.25rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin: 2rem 0;
     }
-    .hash-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 0.25rem;
+    .dim-pillar.d1 { border-color: var(--dim1); }
+    .dim-pillar.d2 { border-color: var(--dim2); }
+    .dim-pillar.d3 { border-color: var(--dim3); }
+    .dim-pillar .num { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; margin-bottom: 0.5rem; }
+    .dim-pillar.d1 .num { color: var(--dim1); }
+    .dim-pillar.d2 .num { color: var(--dim2); }
+    .dim-pillar.d3 .num { color: var(--dim3); }
+    .dim-pillar h3 { font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 0.95rem; margin: 0 0 0.75rem; }
+    .dim-pillar p { color: var(--muted); font-size: 0.9rem; margin: 0 0 1rem; }
+    .dim-pillar .fields { display: flex; flex-direction: column; gap: 0.3rem; }
+    .dim-pillar .field { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--muted); }
+    .dim-pillar .field span { margin-right: 0.5rem; }
+    .dim-pillar.d1 .field span { color: var(--dim1); }
+    .dim-pillar.d2 .field span { color: var(--dim2); }
+    .dim-pillar.d3 .field span { color: var(--dim3); }
+
+    /* LIVE VERIFIER */
+    .verifier-box {
+      background: var(--paper); border: 1px solid var(--border);
+      padding: 2rem; margin: 2rem 0;
     }
-    .hash-value {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.9rem;
-      word-break: break-all;
-      color: var(--ink);
+    .verifier-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
+    .vtab {
+      padding: 0.75rem 1.5rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem;
+      color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent;
+      background: none; border-top: none; border-left: none; border-right: none;
     }
-    .hash-value:hover { color: var(--proof); transition: color 0.2s; }
-    .btn-copy {
-      background: var(--border);
-      color: var(--ink);
-      padding: 0.5rem 1rem;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.8rem;
-      border: none;
-      cursor: pointer;
+    .vtab.active { color: var(--ink); border-bottom-color: var(--proof); }
+    .vtab-panel { display: none; }
+    .vtab-panel.active { display: block; }
+    .v-input {
+      width: 100%; padding: 0.875rem 1rem;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.875rem;
+      background: var(--void); border: 1px solid var(--border);
+      color: var(--ink); margin-bottom: 1rem; display: block;
     }
-    .artifact-buttons {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-    }
-    .artifact-facts {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-    }
-    .artifact-fact {
-      text-align: left;
-    }
-    .artifact-fact .value {
-      font-family: 'IBM Plex Mono', monospace;
-      color: var(--proof);
-      font-size: 1rem;
-    }
-    .artifact-fact .label {
-      font-size: 0.85rem;
-      color: var(--muted);
+    .v-input::placeholder { color: var(--muted); }
+    .v-textarea { min-height: 100px; resize: vertical; }
+    .v-result { padding: 1rem 1.25rem; margin-top: 1rem; display: none; }
+    .v-result.valid { background: rgba(63,185,80,0.07); border-left: 3px solid var(--proof); }
+    .v-result.fail { background: rgba(248,81,73,0.07); border-left: 3px solid var(--red); }
+    .v-result.loading { background: rgba(88,166,255,0.07); border-left: 3px solid var(--anchor); }
+    .v-status { font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin-bottom: 0.4rem; }
+    .v-result.valid .v-status { color: var(--proof); }
+    .v-result.fail .v-status { color: var(--red); }
+    .v-result.loading .v-status { color: var(--anchor); }
+    .v-detail { color: var(--muted); font-size: 0.9rem; }
+    .v-norms { margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .v-norm-tag {
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem;
+      padding: 0.2rem 0.5rem;
+      background: rgba(188,140,255,0.08); border: 1px solid rgba(188,140,255,0.2); color: var(--dim3);
     }
 
-    /* Verifier */
-    .verifier input[type="radio"] { position: absolute; width: 0; height: 0; opacity: 0; }
-    .tab-labels {
-      display: flex;
-      gap: 0;
-      border-bottom: 1px solid var(--border);
+    /* RFC SECTION */
+    .rfc-list { display: flex; flex-direction: column; gap: 1px; margin: 2rem 0; }
+    .rfc-item {
+      background: var(--paper); border: 1px solid var(--border);
+      padding: 1.5rem; display: flex; align-items: flex-start; gap: 2rem; flex-wrap: wrap;
     }
-    .tab-labels label {
-      padding: 1rem 1.5rem;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.9rem;
-      color: var(--muted);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-    }
-    .verifier input#tab-hash:checked ~ .tab-labels label:first-child,
-    .verifier input#tab-json:checked ~ .tab-labels label:last-child {
-      color: var(--ink);
-      border-bottom-color: var(--proof);
-    }
-    .verifier-panel {
-      display: none;
-      padding: 1.5rem 0;
-    }
-    .verifier input#tab-hash:checked ~ .verifier-panel.hash,
-    .verifier input#tab-json:checked ~ .verifier-panel.json { display: block; }
-    .verifier-input {
-      width: 100%;
-      padding: 1rem;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.9rem;
-      background: var(--paper);
-      border: 1px solid var(--border);
-      color: var(--ink);
-      margin-bottom: 1rem;
-    }
-    .verifier-input::placeholder { color: var(--muted); }
-    .verifier-input.textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-    .verify-result {
-      display: none;
-      padding: 1.25rem 1.5rem;
-      margin-top: 1rem;
-      border-radius: 0;
-    }
-    .verify-result.valid {
-      background: rgba(63, 185, 80, 0.08);
-      border-left: 3px solid var(--proof);
-    }
-    .verify-result.fail {
-      background: rgba(248, 81, 73, 0.08);
-      border-left: 3px solid var(--red);
-    }
-    .result-status {
-      font-family: 'IBM Plex Mono', monospace;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-    .verify-result.valid .result-status { color: var(--proof); }
-    .verify-result.fail .result-status { color: var(--red); }
-    .result-details { color: var(--muted); font-size: 0.95rem; }
-    .btn-report {
-      margin-top: 1rem;
-      background: transparent;
-      color: var(--proof);
-      border: 1px solid var(--proof);
-      padding: 0.5rem 1rem;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.85rem;
-      cursor: pointer;
-    }
-    .verify-steps {
-      margin-top: 2rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-    }
-    .verify-steps ol {
-      color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 2;
+    .rfc-meta { min-width: 140px; }
+    .rfc-id { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: var(--signal); }
+    .rfc-status { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; margin-top: 0.25rem; }
+    .rfc-status.published { color: var(--proof); }
+    .rfc-status.draft { color: var(--gold); }
+    .rfc-body h3 { font-family: 'IBM Plex Mono', monospace; font-size: 0.95rem; margin: 0 0 0.4rem; font-weight: 400; }
+    .rfc-body p { color: var(--muted); font-size: 0.875rem; margin: 0 0 0.75rem; }
+    .rfc-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .rfc-tag {
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem;
+      padding: 0.15rem 0.5rem;
+      background: rgba(240,136,62,0.08); border: 1px solid rgba(240,136,62,0.2); color: var(--signal);
     }
 
-    /* Pipeline section */
-    .pipeline-cards {
-      display: flex;
-      gap: 1.5rem;
-      overflow-x: auto;
-      padding-bottom: 1rem;
-      margin: 2rem 0;
-    }
+    /* CORPUS SECTION */
+    .corpus-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin: 2rem 0; }
+    @media(max-width:768px){ .corpus-grid { grid-template-columns: 1fr; } }
+    .corpus-juris { background: var(--paper); border: 1px solid var(--border); padding: 1.25rem; }
+    .corpus-juris-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+    .corpus-flag { font-size: 1.5rem; }
+    .corpus-juris-name { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: var(--ink); }
+    .corpus-juris-count { font-size: 0.72rem; color: var(--muted); }
+    .corpus-norms { display: flex; flex-direction: column; gap: 0.4rem; }
+    .corpus-norm { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); padding: 0.3rem 0.5rem; background: var(--void); }
+    .corpus-norm span { color: var(--dim3); margin-right: 0.5rem; }
+
+    /* PIPELINE */
+    .pipeline-cards { display: flex; gap: 0; overflow-x: auto; padding-bottom: 1rem; margin: 2rem 0; }
     .pipeline-card {
-      min-width: 220px;
-      background: var(--paper);
-      border: 1px solid var(--border);
-      padding: 1.5rem;
+      min-width: 200px; background: var(--paper);
+      border: 1px solid var(--border); border-right: none; padding: 1.5rem;
     }
-    .pipeline-card .letter {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 2rem;
-      color: var(--signal);
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-    .pipeline-card .name {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.85rem;
-      color: var(--ink);
-      margin-bottom: 0.75rem;
-    }
-    .pipeline-card .desc {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-bottom: 1rem;
-    }
-    .pipeline-card .output {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--seal);
-    }
-    .curl-block {
-      background: var(--paper);
-      border: 1px solid var(--border);
-      padding: 1.5rem;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.85rem;
-      color: var(--muted);
-      overflow-x: auto;
-      margin-top: 2rem;
-    }
-    .curl-block .comment { color: var(--muted); }
-    .curl-block .url { color: var(--anchor); }
+    .pipeline-card:last-child { border-right: 1px solid var(--border); }
+    .pipeline-card .letter { font-family: 'IBM Plex Mono', monospace; font-size: 2rem; color: var(--signal); font-weight: 600; margin-bottom: 0.5rem; }
+    .pipeline-card .name { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--ink); margin-bottom: 0.5rem; }
+    .pipeline-card .desc { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.75rem; }
+    .pipeline-card .output { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--seal); }
 
-    /* Adopt section */
-    .adopt-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin: 2rem 0;
+    /* ARTIFACT */
+    .hash-box {
+      background: var(--paper); border: 1px solid var(--proof);
+      padding: 1.25rem 1.5rem; display: flex; align-items: center;
+      justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin: 2rem 0;
     }
-    @media (max-width: 900px) {
-      .adopt-grid { grid-template-columns: 1fr; }
-    }
-    .adopt-card {
-      background: var(--paper);
-      border: 1px solid var(--border);
-      padding: 1.5rem;
-    }
-    .adopt-card h3 {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 1rem;
-      margin: 0 0 0.75rem;
-      font-weight: 400;
-    }
-    .adopt-card p {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin: 0 0 1rem;
-    }
-    .adopt-card .meta {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.8rem;
-      color: var(--proof);
-    }
-    .cta-center {
-      text-align: center;
-      margin-top: 2rem;
-    }
+    .hash-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--muted); margin-bottom: 0.2rem; }
+    .hash-value { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; word-break: break-all; color: var(--ink); }
+    .btn-copy { background: var(--border); color: var(--ink); padding: 0.5rem 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; border: none; cursor: pointer; }
 
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1.5rem;
-    }
-    footer .left { color: var(--muted); font-size: 0.9rem; }
-    footer .right { display: flex; gap: 1.5rem; }
-    footer .badges {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-top: 0.5rem;
-    }
+    /* ADOPT */
+    .adopt-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin: 2rem 0; }
+    @media(max-width:900px){ .adopt-grid { grid-template-columns: 1fr; } }
+    .adopt-card { background: var(--paper); border: 1px solid var(--border); padding: 1.5rem; }
+    .adopt-card h3 { font-family: 'IBM Plex Mono', monospace; font-size: 0.95rem; margin: 0 0 0.75rem; font-weight: 400; }
+    .adopt-card p { color: var(--muted); font-size: 0.875rem; margin: 0 0 1rem; }
+    .adopt-card .meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--proof); }
 
-    /* Reveal */
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 2rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 1.5rem; }
+    footer .left { color: var(--muted); font-size: 0.875rem; }
+    footer .right { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    footer .badges { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); margin-top: 0.5rem; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
   </style>
 </head>
 <body>
@@ -552,148 +283,308 @@
     <div class="nav-brand">
       <span class="mono-bold logo">HDR</span>
       <span class="mono sub">· HEILLON DECISION RECORD</span>
+      <span class="mono badge-v2">v2.0</span>
     </div>
     <div class="nav-links">
-      <a href="#protocol">Protocol</a>
-      <a href="#artifact">Artifact</a>
+      <a href="#dimensions">Dimensions</a>
       <a href="#verify">Verify</a>
+      <a href="#corpus">Corpus</a>
+      <a href="#rfc">RFCs</a>
       <a href="#adopt">Adopt</a>
       <a href="https://heillon.com" class="external" target="_blank" rel="noopener">heillon.com</a>
+    </div>
+    <div class="nav-live" id="live-status">
+      <div class="live-dot"></div>
+      <span>checking backend...</span>
     </div>
   </nav>
 
   <!-- HERO -->
   <section id="hero" class="hero reveal">
     <div class="hero-text">
-      <div class="eyebrow mono">OPEN PROTOCOL · v1.0 · FREE FOREVER</div>
-      <h1>The proof that a<br>decision was legitimate.</h1>
-      <p class="subtitle">The HDR — Heillon Decision Record — is an open cryptographic standard. A sealed JSON object that proves: who authorized, under which mandate, with which immutable hash. Verifiable by anyone. Forever.</p>
+      <div class="hero-eyebrow">OPEN PROTOCOL · v2.0 · THREE DIMENSIONS · FREE FOREVER</div>
+      <h1>The only proof that covers <em>all three</em>.</h1>
+      <p class="hero-subtitle">
+        HDR v2.0 seals Fact, Authority, and Normative Context in a single cryptographic record.
+        Any auditor. Any jurisdiction. Any future point in time. No source code access required.
+      </p>
       <div class="hero-buttons">
-        <button class="btn btn-primary" onclick="downloadCCR()">↓ Download CCR-03 — free HDR artifact</button>
-        <a href="#verify" class="btn btn-secondary">→ Verify in 60 seconds</a>
+        <button class="btn btn-primary" onclick="downloadCCR()">↓ Download live HDR artifact</button>
+        <a href="#verify" class="btn btn-secondary">→ Verify in 30 seconds</a>
+        <a href="#rfc" class="btn btn-dim3">RFC-0002 · RFC-0003</a>
       </div>
       <p class="hero-note">No account. No form. No paywall. The protocol is open.</p>
     </div>
-    <div class="hero-card reveal reveal-delay-1">
-      <div class="hero-card-header">
-        <div class="hero-card-title">
-          <span class="status-dot"></span>
-          CCR-03 · HEILLON DECISION RECORD
+    <div class="dim-card reveal delay-1">
+      <div class="dim-card-header">
+        <div class="dim-card-title">
+          <span class="live-dot"></span>
+          HDR v2.0 · LIVE RECORD
         </div>
-        <span class="hero-card-badge">CANONICAL_VALID</span>
+        <span class="dim-badge" id="hero-status">LOADING...</span>
       </div>
-      <div class="hero-card-json">
-{"cycleId": "CCR-03", "phase": "CONSTITUTIONAL_ACTIVE", "cycleStatus": "CANONICAL_VALID", "hash": "a3f9e2c1b8d46f50...", "nloLevel": 4, "chainIntact": true, "sealedAt": "2026-02-28T03:00:00Z", "tests": "9/9 PASS"}
+      <div class="dim-row">
+        <span class="dim-num d1">D1</span>
+        <div class="dim-content">
+          <div class="label">PROOF OF FACT</div>
+          <div class="value">decision_id · execution_hash · timestamp_sovereign · chain_position</div>
+        </div>
       </div>
-      <div class="hero-card-footer">SHA-256 · RFC 3161 · 27/27 constitutional tests · chain INTACT</div>
-    </div>
-  </section>
-
-  <!-- PROTOCOL -->
-  <section id="protocol" class="section-alt reveal">
-    <div class="section-label signal">THE PROTOCOL</div>
-    <h2 class="section-title">A decision without proof is a claim. An HDR is proof.</h2>
-    <div class="protocol-grid">
-      <div class="protocol-card">
-        <h3>[ SEALED ]</h3>
-        <p>Every field is cryptographically bound. Tamper one byte — the hash changes.</p>
+      <div class="dim-row">
+        <span class="dim-num d2">D2</span>
+        <div class="dim-content">
+          <div class="label">PROOF OF AUTHORITY</div>
+          <div class="value">authority_id · mandate_hash · nlo_level · Z-J-M-H-K pipeline</div>
+        </div>
       </div>
-      <div class="protocol-card">
-        <h3>[ VERIFIABLE ]</h3>
-        <p>Any auditor, anywhere, at any future point, can verify an HDR independently.</p>
+      <div class="dim-row">
+        <span class="dim-num d3">D3</span>
+        <div class="dim-content">
+          <div class="label">PROOF OF NORMATIVE CONTEXT</div>
+          <div class="value" id="hero-norms">corpus_id · norms[] · jurisdiction · binding_at_timestamp</div>
+        </div>
       </div>
-      <div class="protocol-card">
-        <h3>[ OPEN ]</h3>
-        <p>The HDR format is free. The spec is public. No license. No vendor lock-in.</p>
-      </div>
-    </div>
-    <div class="pipeline-line">
-      <span class="pipeline-step"><span class="letter">Z</span> · Zone</span>
-      <span>→</span>
-      <span class="pipeline-step"><span class="letter">J</span> · Jurisdiction</span>
-      <span>→</span>
-      <span class="pipeline-step"><span class="letter">M</span> · Mandate</span>
-      <span>→</span>
-      <span class="pipeline-step"><span class="letter">H</span> · HEILLON</span>
-      <span>→</span>
-      <span class="pipeline-step"><span class="letter">K</span> · Knowledge</span>
-    </div>
-  </section>
-
-  <!-- ARTIFACT -->
-  <section id="artifact" class="reveal">
-    <div class="section-label proof">PUBLIC ARTIFACT · CCR-03</div>
-    <h2 class="section-title">This is a real HDR. Not a demo. Download it.</h2>
-    <p style="color: var(--muted); max-width: 700px; margin-bottom: 1rem;">CCR-03 — Constitutional Cycle Record 03 — is the first public HDR issued by HEILLON. It seals the constitutional validation of the entire HEILLON infrastructure. It is real, verifiable, and permanent.</p>
-    <div class="artifact-hash-box">
-      <div>
-        <div class="hash-label">SHA-256</div>
-        <div class="hash-value" id="display-hash">a3f9e2c1b8d46f501c27e3b9a84d72f156e038c9d2b17a4e8f3c690d1b25a7e4</div>
-      </div>
-      <button id="btn-copy-hash" class="btn-copy mono" onclick="copyHash()">copy</button>
-    </div>
-    <div class="artifact-buttons">
-      <button class="btn btn-primary" onclick="downloadCCR()">↓ Download CCR-03.json</button>
-      <a href="#verify" class="btn btn-secondary">→ Verify this HDR now</a>
-    </div>
-    <div class="artifact-facts" id="metrics">
-      <div class="artifact-fact">
-        <div class="value"><span id="metric-tests">0</span>/27 tests · PASS</div>
-        <div class="label">Constitutional Valid</div>
-      </div>
-      <div class="artifact-fact">
-        <div class="value">NLO Level 4 / 5</div>
-        <div class="label">Sovereign Authority</div>
-      </div>
-      <div class="artifact-fact">
-        <div class="value">Chain Position 3</div>
-        <div class="label">INTACT · Sealed</div>
+      <div class="dim-footer" id="hero-footer">
+        SHA-256 · Sovereign Time · Constitutional Phase: ACTIVE · 3 jurisdictions
       </div>
     </div>
   </section>
 
-  <!-- VERIFY -->
-  <section id="verify" class="section-alt reveal">
-    <div class="section-label signal">PUBLIC VERIFIER</div>
-    <h2 class="section-title">Verify any HDR yourself. No account. No API key.</h2>
-    <div class="verifier">
-      <input type="radio" name="verifier-tab" id="tab-hash" checked>
-      <input type="radio" name="verifier-tab" id="tab-json">
-      <div class="tab-labels">
-        <label for="tab-hash">Hash</label>
-        <label for="tab-json">JSON</label>
+  <!-- 3 DIMENSIONS -->
+  <div class="section-alt-bg">
+  <section id="dimensions" class="reveal">
+    <div class="section-label signal">HDR v2.0 — THE THREE DIMENSIONS</div>
+    <h2 class="section-title">A single record. Three independent proofs. One cryptographic seal.</h2>
+    <p style="color:var(--muted);max-width:700px;margin-bottom:2rem;">
+      Previous audit systems prove what happened. HDR v2.0 proves what happened,
+      who was authorized to make it happen, and under which normative context it happened —
+      all sealed at the same sovereign timestamp, verifiable forever.
+    </p>
+    <div class="dim-grid">
+      <div class="dim-pillar d1 reveal delay-1">
+        <div class="num">DIMENSION 01 / 03</div>
+        <h3>PROOF OF FACT</h3>
+        <p>Cryptographic proof of the decision itself. What happened, when, with which hash. Tamper one byte — the chain breaks.</p>
+        <div class="fields">
+          <div class="field"><span>→</span>decision_id</div>
+          <div class="field"><span>→</span>execution_hash (SHA-256)</div>
+          <div class="field"><span>→</span>timestamp_sovereign (HSC)</div>
+          <div class="field"><span>→</span>outcome · chain_position</div>
+          <div class="field"><span>→</span>previous_hash</div>
+        </div>
       </div>
-      <div class="verifier-panel hash">
-        <input type="text" id="hash-input" class="verifier-input" placeholder="Paste SHA-256 hash of any HDR artifact...">
-        <button class="btn btn-primary" onclick="verifyHash()">VERIFY HASH</button>
+      <div class="dim-pillar d2 reveal delay-2">
+        <div class="num">DIMENSION 02 / 03</div>
+        <h3>PROOF OF AUTHORITY</h3>
+        <p>Who was authorized at the exact moment of execution. Mandate chain from Z to K. No retroactive claims.</p>
+        <div class="fields">
+          <div class="field"><span>→</span>authority_id · role</div>
+          <div class="field"><span>→</span>mandate_hash</div>
+          <div class="field"><span>→</span>nlo_level (1–5)</div>
+          <div class="field"><span>→</span>pipeline: Z-J-M-H-K</div>
+          <div class="field"><span>→</span>scope[] · jurisdiction</div>
+        </div>
       </div>
-      <div class="verifier-panel json">
-        <textarea id="json-input" class="verifier-input textarea" placeholder='{"cycleId": "CCR-03", "hash": "a3f9e2c1..."}'></textarea>
-        <button class="btn btn-primary" onclick="verifyJSON()">VERIFY ARTIFACT</button>
+      <div class="dim-pillar d3 reveal delay-3">
+        <div class="num">DIMENSION 03 / 03</div>
+        <h3>PROOF OF NORMATIVE CONTEXT</h3>
+        <p>Which norms were in force at the decision timestamp. Corpus of 13 norms across BR, UAE, and EU — automatically bound.</p>
+        <div class="fields">
+          <div class="field"><span>→</span>corpus_id · version</div>
+          <div class="field"><span>→</span>norms[] (auto-bound)</div>
+          <div class="field"><span>→</span>jurisdiction: BR · UAE · EU</div>
+          <div class="field"><span>→</span>binding_at_timestamp</div>
+          <div class="field"><span>→</span>act_type · domain</div>
+        </div>
       </div>
     </div>
-    <div id="verify-result" class="verify-result"></div>
-    <div class="verify-steps">
-      <p><strong>How to verify CCR-03 in 60 seconds:</strong></p>
-      <ol>
-        <li>Download CCR-03.json above</li>
-        <li>Copy the "hash" field value</li>
-        <li>Paste above and click VERIFY</li>
-      </ol>
-      <p style="color: var(--muted); margin-top: 0.5rem;">Expected result: PROOF VERIFIED · CANONICAL_VALID · Chain INTACT</p>
+    <div style="background:var(--paper);border:1px solid var(--border);padding:1.5rem;margin-top:2rem;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:0.8rem;color:var(--muted);margin-bottom:0.75rem;">THE CRITICAL DISTINCTION</div>
+      <p style="color:var(--ink);margin:0;font-family:'IBM Plex Serif',serif;font-size:1.05rem;line-height:1.7;">
+        "Dimension 3 does not ask <em>what the regulation says today</em>.<br>
+        It proves <em>what was in force at the moment of the decision</em>.<br>
+        These are different things. Only HDR v2.0 captures the difference."
+      </p>
+    </div>
+  </section>
+  </div>
+  <!-- LIVE VERIFIER -->
+  <section id="verify" class="reveal">
+    <div class="section-label proof">LIVE PUBLIC VERIFIER</div>
+    <h2 class="section-title">Verify any HDR against the live backend. No account.</h2>
+    <p style="color:var(--muted);max-width:640px;margin-bottom:1.5rem;">
+      The verifier connects directly to the HEILLON production backend.
+      Paste any decision ID or hash — get back all three dimensions verified.
+    </p>
+    <div class="verifier-box">
+      <div class="verifier-tabs">
+        <button class="vtab active" onclick="switchTab(this,'tab-id')">Decision ID</button>
+        <button class="vtab" onclick="switchTab(this,'tab-hash')">Hash</button>
+        <button class="vtab" onclick="switchTab(this,'tab-json')">JSON Artifact</button>
+      </div>
+      <div class="vtab-panel active" id="tab-id">
+        <input type="text" class="v-input" id="input-id" placeholder="Paste decision ID (e.g. HDR-2026-abc123...)">
+        <button class="btn btn-primary" onclick="verifyLive('id')">VERIFY AGAINST LIVE BACKEND →</button>
+      </div>
+      <div class="vtab-panel" id="tab-hash">
+        <input type="text" class="v-input" id="input-hash" placeholder="Paste SHA-256 hash of any HDR...">
+        <button class="btn btn-primary" onclick="verifyLive('hash')">VERIFY HASH →</button>
+      </div>
+      <div class="vtab-panel" id="tab-json">
+        <textarea class="v-input v-textarea" id="input-json" placeholder='{"decision_id": "...", "execution_hash": "...", "outcome": "APPROVED"}'></textarea>
+        <button class="btn btn-primary" onclick="verifyLive('json')">VERIFY ARTIFACT →</button>
+      </div>
+      <div class="v-result" id="v-result"></div>
+    </div>
+    <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:0.8rem;color:var(--muted);margin-bottom:0.75rem;">VERIFY MANUALLY VIA curl</div>
+      <div style="background:var(--paper);border:1px solid var(--border);padding:1.25rem;font-family:'IBM Plex Mono',monospace;font-size:0.82rem;color:var(--muted);overflow-x:auto;">
+        <span style="color:var(--muted)"># Verify any decision ID</span><br>
+        curl <span style="color:var(--anchor)">https://heilloncommandcenter-production.up.railway.app/public/verify/{decision_id}</span><br><br>
+        <span style="color:var(--muted)"># Get backend health + constitutional status</span><br>
+        curl <span style="color:var(--anchor)">https://heilloncommandcenter-production.up.railway.app/health</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORPUS NORMATIVO -->
+  <div class="section-alt-bg">
+  <section id="corpus" class="reveal">
+    <div class="section-label dim3">DIMENSION 3 — NORMATIVE CORPUS</div>
+    <h2 class="section-title">13 norms. 3 jurisdictions. Automatically bound to every decision.</h2>
+    <p style="color:var(--muted);max-width:680px;margin-bottom:2rem;">
+      The HEILLON corpus is pre-loaded, versioned, and cryptographically sealed.
+      When a decision is made, the system automatically binds every norm in force
+      for that act type, domain, and jurisdiction — at that exact timestamp.
+    </p>
+    <div class="corpus-grid">
+      <div class="corpus-juris reveal delay-1">
+        <div class="corpus-juris-header">
+          <span class="corpus-flag">🇧🇷</span>
+          <div>
+            <div class="corpus-juris-name">BRAZIL</div>
+            <div class="corpus-juris-count">7 norms active</div>
+          </div>
+        </div>
+        <div class="corpus-norms">
+          <div class="corpus-norm"><span>→</span>Resolução BCB 4.557/2017</div>
+          <div class="corpus-norm"><span>→</span>Circular BCB 3.978/2020</div>
+          <div class="corpus-norm"><span>→</span>CMN 4.966/2021</div>
+          <div class="corpus-norm"><span>→</span>LGPD Art. 7 (Lei 13.709)</div>
+          <div class="corpus-norm"><span>→</span>LGPD Art. 18 — Data Rights</div>
+          <div class="corpus-norm"><span>→</span>LGPD Art. 20 — Automated Decisions</div>
+          <div class="corpus-norm"><span>→</span>RN ANS 443/2019</div>
+        </div>
+      </div>
+      <div class="corpus-juris reveal delay-2">
+        <div class="corpus-juris-header">
+          <span class="corpus-flag">🇦🇪</span>
+          <div>
+            <div class="corpus-juris-name">UAE / DIFC</div>
+            <div class="corpus-juris-count">3 norms active</div>
+          </div>
+        </div>
+        <div class="corpus-norms">
+          <div class="corpus-norm"><span>→</span>DIFC Data Protection Law 2020</div>
+          <div class="corpus-norm"><span>→</span>DIFC AI Regulation 2024 (Reg.10)</div>
+          <div class="corpus-norm"><span>→</span>UAE Federal Decree-Law 45/2021</div>
+        </div>
+      </div>
+      <div class="corpus-juris reveal delay-3">
+        <div class="corpus-juris-header">
+          <span class="corpus-flag">🇪🇺</span>
+          <div>
+            <div class="corpus-juris-name">EUROPEAN UNION</div>
+            <div class="corpus-juris-count">3 norms active</div>
+          </div>
+        </div>
+        <div class="corpus-norms">
+          <div class="corpus-norm"><span>→</span>GDPR Art. 22 — Automated Decisions</div>
+          <div class="corpus-norm"><span>→</span>GDPR Art. 5 — Processing Principles</div>
+          <div class="corpus-norm"><span>→</span>EU AI Act Art. 9 — Risk Management</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:var(--paper);border:1px solid rgba(188,140,255,0.2);padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:0.78rem;color:var(--dim3);">HOW IT WORKS</span>
+      <span style="color:var(--muted);font-size:0.875rem;">
+        At decision time → system identifies act_type + domain + jurisdiction →
+        queries active corpus at <code style="color:var(--dim3)">timestamp_sovereign</code> →
+        binds all applicable norms → seals binding in HDR →
+        result: Dimension 3 is permanent and retrospective.
+      </span>
+    </div>
+  </section>
+  </div>
+  <!-- RFC SECTION -->
+  <section id="rfc" class="reveal">
+    <div class="section-label signal">OPEN SPECIFICATIONS</div>
+    <h2 class="section-title">The protocol is open. The specs are public. No license.</h2>
+    <div class="rfc-list">
+      <div class="rfc-item reveal delay-1">
+        <div class="rfc-meta">
+          <div class="rfc-id">RFC-0001</div>
+          <div class="rfc-status published">● CANONICAL</div>
+        </div>
+        <div class="rfc-body">
+          <h3>HDR v1.0 — Heillon Decision Record (Foundation)</h3>
+          <p>Defines the base structure of an HDR: sealed JSON object with cryptographic hash, authority chain, sovereign timestamp, and NLO level. The foundation that HDR v2.0 extends.</p>
+          <div class="rfc-tags">
+            <span class="rfc-tag">SHA-256</span>
+            <span class="rfc-tag">Z-J-M-H-K</span>
+            <span class="rfc-tag">Sovereign Time</span>
+            <span class="rfc-tag">NLO Levels</span>
+          </div>
+        </div>
+      </div>
+      <div class="rfc-item reveal delay-2">
+        <div class="rfc-meta">
+          <div class="rfc-id">RFC-0002</div>
+          <div class="rfc-status published">● PUBLISHED</div>
+        </div>
+        <div class="rfc-body">
+          <h3>HPG — Heillon Pulse Gravity (Decision Observability)</h3>
+          <p>Defines the SIGNAL model: ÂNCORA + INTENÇÃO + CONTEXTO + CONFIANÇA. Five-dimensional Evidence Siege with mathematical trust model P(D|S) ≈ 1 − ∏(1 − wᵢ · P(sᵢ)). Confidence levels: SOVEREIGN (≥0.99), VERIFIED, ANCHORED, INFERRED, CONTESTED, UNTRUSTED.</p>
+          <div class="rfc-tags">
+            <span class="rfc-tag">HPG</span>
+            <span class="rfc-tag">WAL Shadowing</span>
+            <span class="rfc-tag">Cross-Entropy</span>
+            <span class="rfc-tag">Evidence Siege</span>
+            <span class="rfc-tag">Intent Declaration</span>
+          </div>
+        </div>
+      </div>
+      <div class="rfc-item reveal delay-3">
+        <div class="rfc-meta">
+          <div class="rfc-id">RFC-0003</div>
+          <div class="rfc-status draft">◐ DRAFT</div>
+        </div>
+        <div class="rfc-body">
+          <h3>HDR v2.0 — Three Dimensions of Computable Legitimacy</h3>
+          <p>Extends HDR v1.0 with Dimension 3: Proof of Normative Context. Defines corpus binding, act_type mapping, temporal corpus queries, and the normative_context field in the HDR record. Retrocompatible: HDR v1.0 artifacts remain valid.</p>
+          <div class="rfc-tags">
+            <span class="rfc-tag">Corpus Binding</span>
+            <span class="rfc-tag">Temporal Normativity</span>
+            <span class="rfc-tag">BR · UAE · EU</span>
+            <span class="rfc-tag">NCA/NDA Agents</span>
+            <span class="rfc-tag">HDR v1.0 compatible</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- PIPELINE -->
+  <div class="section-alt-bg">
   <section id="pipeline" class="reveal">
     <div class="section-label signal">THE PIPELINE</div>
-    <h2 class="section-title">Every HDR follows the Z-J-M-H-K protocol.</h2>
+    <h2 class="section-title">Every HDR v2.0 follows Z-J-M-H-K.</h2>
     <div class="pipeline-cards">
       <div class="pipeline-card">
         <div class="letter">Z</div>
         <div class="name">ZONE</div>
-        <div class="desc">Define operational domain and boundaries</div>
-        <div class="output">→ zoneId, boundaries[]</div>
+        <div class="desc">Operational domain, boundaries, geographic scope</div>
+        <div class="output">→ zoneId, jurisdiction, boundaries[]</div>
       </div>
       <div class="pipeline-card">
         <div class="letter">J</div>
@@ -704,248 +595,216 @@
       <div class="pipeline-card">
         <div class="letter">M</div>
         <div class="name">MANDATE</div>
-        <div class="desc">Declare intention before execution</div>
+        <div class="desc">Declare intention before execution. Intent is never inferred.</div>
         <div class="output">→ intentionHash, declaredAt, nloTarget</div>
       </div>
       <div class="pipeline-card">
         <div class="letter">H</div>
         <div class="name">HEILLON SEAL</div>
-        <div class="desc">Execute and seal with SHA-256 hash</div>
-        <div class="output">→ executionHash, sealedAt, chainPosition</div>
+        <div class="desc">Execute + bind corpus + seal all three dimensions simultaneously</div>
+        <div class="output">→ execution_hash, normative_context[], sealedAt</div>
       </div>
       <div class="pipeline-card">
         <div class="letter">K</div>
         <div class="name">KNOWLEDGE</div>
-        <div class="desc">Certify NLO level and generate audit record</div>
-        <div class="output">→ nloLevel, auditTrail, reportHash</div>
+        <div class="desc">Certify NLO level, generate audit record, certify compliance</div>
+        <div class="output">→ nloLevel, auditTrail, certHash</div>
       </div>
-    </div>
-    <div class="curl-block">
-      <span class="comment"># Verify CCR-03 via HEILLON public API</span><br>
-      curl <span class="url">https://heilloncommandcenter-production.up.railway.app/health</span><br><br>
-      <span class="comment"># Response includes:</span><br>
-      <span class="comment"># { "constitutional_phase": "CONSTITUTIONAL_ACTIVE", "schema_version": "M2+M3", "tables": 15, "chain_intact": true }</span>
     </div>
   </section>
+  </div>
 
   <!-- ADOPT -->
-  <section id="adopt" class="section-alt reveal">
+  <section id="adopt" class="reveal">
     <div class="section-label signal">ADOPT THE PROTOCOL</div>
     <h2 class="section-title">The HDR is free. The infrastructure is HEILLON.</h2>
-    <p style="color: var(--muted); max-width: 700px; margin-bottom: 2rem;">Any organization can verify and reference HDR artifacts — free, always. To generate HDRs for your own decisions at institutional scale, HEILLON provides the backend infrastructure, API, and compliance layer.</p>
+    <p style="color:var(--muted);max-width:680px;margin-bottom:2rem;">
+      Any organization can verify HDR artifacts — free, always.
+      To generate HDRs at institutional scale with full corpus binding and HAV audits,
+      HEILLON provides the complete backend infrastructure.
+    </p>
     <div class="adopt-grid">
-      <div class="adopt-card">
+      <div class="adopt-card reveal delay-1">
         <h3>[ VERIFY ]</h3>
-        <p>Use the public verifier for any HDR artifact. Free · No account.</p>
-        <div class="meta">→ Scroll up</div>
+        <p>Use the live public verifier above. Any HDR. Free. No account required. Forever.</p>
+        <div class="meta">→ Scroll up to Verify section</div>
       </div>
-      <div class="adopt-card">
+      <div class="adopt-card reveal delay-2">
         <h3>[ INTEGRATE ]</h3>
-        <p>One endpoint. Your system starts generating cryptographic proof for every decision. No refactoring.</p>
+        <p>One endpoint. Your system starts generating HDR v2.0 records — all three dimensions — for every decision. No refactoring. No instrumentation.</p>
         <div class="meta" style="margin-top:1rem;">
-          <code style="display:block;font-size:0.78rem;padding:0.5rem 0.75rem;background:rgba(45,106,79,0.08);border:1px solid rgba(45,106,79,0.2);margin-bottom:0.75rem;">POST /pulse/onboard</code>
-          <a href="https://heillon.com/#pulse-section" target="_blank" rel="noopener" style="color:var(--proof);text-decoration:none;font-size:0.82rem;">→ See zero-friction integration at heillon.com</a>
+          <code style="display:block;padding:0.4rem 0.6rem;background:rgba(63,185,80,0.06);border:1px solid rgba(63,185,80,0.15);margin-bottom:0.5rem;font-size:0.75rem;">POST /guard/v1/evaluate</code>
+          <a href="https://vitrine.heillon.com" target="_blank" rel="noopener" style="color:var(--proof);font-size:0.8rem;">→ See full integration guide</a>
         </div>
       </div>
-      <div class="adopt-card">
+      <div class="adopt-card reveal delay-3">
         <h3>[ INSTITUTIONAL ]</h3>
-        <p>Full deployment with SLAs, audit reports, EU AI Act compliance layer, and dedicated support.</p>
+        <p>Full deployment with corpus customization, HAV autonomous audits, compliance certificates, SLA, and dedicated support.</p>
         <div class="meta" style="margin-top:1rem;">
-          <a href="mailto:contact@heillon.com" style="color:var(--proof);text-decoration:none;font-size:0.82rem;">contact@heillon.com →</a>
+          <a href="mailto:contact@heillon.com" style="color:var(--proof);font-size:0.8rem;">contact@heillon.com →</a>
         </div>
       </div>
     </div>
-    <div class="cta-center" style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-      <a href="https://heillon.com/#pulse-section" class="btn btn-primary" target="_blank" rel="noopener">→ Zero-friction integration — heillon.com</a>
-      <a href="mailto:contact@heillon.com" class="btn btn-secondary" style="background:transparent;border:1px solid var(--proof);color:var(--proof);">Request institutional access</a>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2rem;">
+      <a href="https://vitrine.heillon.com" class="btn btn-primary" target="_blank">→ Integration guide — vitrine.heillon.com</a>
+      <a href="mailto:contact@heillon.com" class="btn btn-secondary">Request institutional access</a>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
     <div class="left">
-      <div><strong>HDR — Heillon Decision Record</strong></div>
-      <div>Open Legitimacy Protocol · v1.0</div>
-      <div>Free. Always.</div>
-      <div class="badges">CCR-03 · SHA-256 · RFC 3161 · EU AI Act Art. 12 · NIST AI RMF · ISO 27001</div>
+      <div><strong>HDR — Heillon Decision Record v2.0</strong></div>
+      <div>Open Legitimacy Protocol · Three Dimensions · Free. Always.</div>
+      <div class="badges">
+        RFC-0001 CANONICAL · RFC-0002 PUBLISHED · RFC-0003 DRAFT ·
+        SHA-256 · Sovereign Time (HSC) · BR · UAE · EU ·
+        LGPD Art.20 · GDPR Art.22 · EU AI Act Art.9 · DIFC Reg.10
+      </div>
     </div>
     <div class="right">
       <a href="https://heillon.com" target="_blank" rel="noopener">heillon.com ↗</a>
-      <a href="mailto:contact@heillon.com">contact@heillon.com</a>
+      <a href="https://vitrine.heillon.com" target="_blank" rel="noopener">vitrine ↗</a>
+      <a href="mailto:contact@heillon.com">contact</a>
     </div>
   </footer>
-
   <script>
-    const CCR03_HASH = 'a3f9e2c1b8d46f501c27e3b9a84d72f156e038c9d2b17a4e8f3c690d1b25a7e4';
+    const BACKEND = 'https://heilloncommandcenter-production.up.railway.app';
 
-    const CCR03 = {
-      cycleId: "CCR-03",
-      version: "v4.4.0-canonical-sealed",
-      commitTag: "v4.4.0-canonical-sealed",
-      commitHash: "f18ef85",
-      phase: "CONSTITUTIONAL_ACTIVE",
-      schemaVersion: "M2+M3",
-      tablesFound: 15,
-      cycleStatus: "CANONICAL_VALID",
-      tests: "9/9 PASS",
-      testBreakdown: { "CCR-01": "9/9 PASS", "CCR-02": "9/9 PASS", "CCR-03": "9/9 PASS" },
-      hash: CCR03_HASH,
-      previousHash: "0000000000000000000000000000000000000000000000000000000000000000",
-      hashAlgorithm: "SHA-256",
-      chainPosition: 3,
-      sealedAt: "2026-02-28T03:00:00Z",
-      sealedBy: "HEILLON-KERNEL-SOVEREIGN",
-      authority: "HEILLON-KERNEL-SOVEREIGN",
-      authorityScope: ["CONSTITUTIONAL", "LEDGER_WRITE", "CYCLE_SEAL"],
-      nloLevel: 4,
-      nloMax: 5,
-      chainIntact: true,
-      milestones: ["M1","M2","M3","M3.5","M3.6","M3.7","M3.8"],
-      pillars: {
-        "P-01": "SOVEREIGN_TIME", "P-02": "IMMUTABLE_LEDGER",
-        "P-03": "FORMAL_AUTHORITY", "P-04": "PRIOR_INTENTION", "P-05": "NLO_LEVELS"
-      },
-      flags: {
-        "M3_AUTHORITY": true, "M3_AUTHORITY_DELEGATION": true,
-        "M3_AUTHORITY_QUORUM": true, "M3_AUTHORITY_GATE": true,
-        "M3_GLOBAL_ENFORCEMENT": true, "M3_MODULE_CATALOG": true
-      },
-      verifier: "heillon-public-verifier-v1",
-      description: "Constitutional Cycle Record 03 — Canonical Foundation Seal.",
-      auditNote: "Public artifact. SHA-256 verifiable by any party. Tamper any field and the hash will not match."
-    };
-
-    function downloadCCR() {
-      const blob = new Blob([JSON.stringify(CCR03, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'CCR-03_heillon_decision_record.json';
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function verifyHash() {
-      const raw = document.getElementById('hash-input')?.value?.trim()?.toLowerCase();
-      if (!raw || raw.length === 0) return;
-
-      const resultEl = document.getElementById('verify-result');
-      if (!resultEl) return;
-
-      if (raw === CCR03_HASH.toLowerCase()) {
-        resultEl.className = 'verify-result valid';
-        resultEl.style.display = 'block';
-        resultEl.innerHTML = `
-          <div class="result-status">✓ PROOF VERIFIED</div>
-          <div class="result-details">
-            Matched: CCR-03 · Chain: INTACT · Phase: CONSTITUTIONAL_ACTIVE · NLO: 4/5
-          </div>
-          <button onclick="downloadReport()" class="btn-report">↓ Download verification report</button>
-        `;
-      } else {
-        resultEl.className = 'verify-result fail';
-        resultEl.style.display = 'block';
-        resultEl.innerHTML = `
-          <div class="result-status">✗ HASH_NOT_FOUND</div>
-          <div class="result-details">This artifact is unknown or has been tampered.</div>
-        `;
+    // Live backend status
+    async function checkBackend() {
+      const el = document.getElementById('live-status');
+      const heroStatus = document.getElementById('hero-status');
+      const heroFooter = document.getElementById('hero-footer');
+      try {
+        const r = await fetch(BACKEND + '/health', { signal: AbortSignal.timeout(5000) });
+        const d = await r.json();
+        if (el) el.innerHTML = '<div class="live-dot"></div><span>backend live · ' + (d.statistics?.total_events || 0) + ' events</span>';
+        if (heroStatus) heroStatus.textContent = d.constitutional_phase || 'CONSTITUTIONAL_ACTIVE';
+        if (heroFooter) heroFooter.textContent = 'SHA-256 · ' + (d.database?.tables_found || 35) + ' tables · ' + (d.statistics?.total_events || 0) + ' events · 3 jurisdictions';
+      } catch(e) {
+        if (el) el.innerHTML = '<div style="width:6px;height:6px;background:var(--gold);border-radius:50%"></div><span>backend offline</span>';
+        if (heroStatus) heroStatus.textContent = 'OFFLINE';
       }
     }
 
-    function verifyJSON() {
-      const raw = document.getElementById('json-input')?.value?.trim();
-      if (!raw) return;
+    // Tab switching
+    function switchTab(btn, panelId) {
+      document.querySelectorAll('.vtab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.vtab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(panelId).classList.add('active');
+    }
 
-      const resultEl = document.getElementById('verify-result');
-      if (!resultEl) return;
+    // Live verifier
+    async function verifyLive(mode) {
+      const resultEl = document.getElementById('v-result');
+      resultEl.className = 'v-result loading';
+      resultEl.style.display = 'block';
+      resultEl.innerHTML = '<div class="v-status">⟳ QUERYING BACKEND...</div><div class="v-detail">Connecting to heilloncommandcenter-production.up.railway.app</div>';
+
+      let decisionId = null;
+      if (mode === 'id') decisionId = document.getElementById('input-id').value.trim();
+      else if (mode === 'hash') decisionId = document.getElementById('input-hash').value.trim();
+      else if (mode === 'json') {
+        try {
+          const obj = JSON.parse(document.getElementById('input-json').value.trim());
+          decisionId = obj.decision_id || obj.id || obj.cycleId;
+        } catch(e) {
+          resultEl.className = 'v-result fail';
+          resultEl.innerHTML = '<div class="v-status">✗ INVALID JSON</div><div class="v-detail">Could not parse JSON artifact.</div>';
+          return;
+        }
+      }
+
+      if (!decisionId) {
+        resultEl.className = 'v-result fail';
+        resultEl.innerHTML = '<div class="v-status">✗ EMPTY INPUT</div><div class="v-detail">Paste a decision ID, hash, or JSON artifact.</div>';
+        return;
+      }
 
       try {
-        const obj = JSON.parse(raw);
-        const hash = obj.hash?.toLowerCase()?.trim();
-        if (hash === CCR03_HASH.toLowerCase()) {
-          resultEl.className = 'verify-result valid';
-          resultEl.style.display = 'block';
+        const [vr, cr] = await Promise.allSettled([
+          fetch(BACKEND + '/public/verify/' + encodeURIComponent(decisionId), { signal: AbortSignal.timeout(8000) }),
+          fetch(BACKEND + '/hdr/' + encodeURIComponent(decisionId) + '/context', { signal: AbortSignal.timeout(8000) })
+        ]);
+
+        if (vr.status === 'fulfilled' && vr.value.ok) {
+          const vd = await vr.value.json();
+          let normsHtml = '';
+          if (cr.status === 'fulfilled' && cr.value.ok) {
+            const cd = await cr.value.json();
+            const norms = cd.normative_context?.norms || cd.norms || [];
+            if (norms.length) {
+              normsHtml = '<div class="v-norms">' + norms.map(n => '<span class="v-norm-tag">' + (n.norm_code || n.code || n) + '</span>').join('') + '</div>';
+            }
+          }
+          resultEl.className = 'v-result valid';
           resultEl.innerHTML = `
-            <div class="result-status">✓ PROOF VERIFIED</div>
-            <div class="result-details">
-              Matched: CCR-03 · Chain: INTACT · Phase: CONSTITUTIONAL_ACTIVE · NLO: 4/5
+            <div class="v-status">✓ PROOF VERIFIED — ALL DIMENSIONS</div>
+            <div class="v-detail">
+              D1 Fact: ${vd.is_valid ? 'INTACT' : 'CHECK'} · D2 Authority: ${vd.outcome || vd.chain_position ? 'PRESENT' : 'CHECK'} · D3 Context: ${normsHtml ? 'BOUND' : 'QUERIED'}
+              ${vd.outcome ? '<br>Outcome: <strong>' + vd.outcome + '</strong>' : ''}
+              ${vd.timestamp_sovereign ? '<br>Sealed: ' + new Date(vd.timestamp_sovereign).toLocaleString() : ''}
             </div>
-            <button onclick="downloadReport()" class="btn-report">↓ Download verification report</button>
+            ${normsHtml}
           `;
         } else {
-          resultEl.className = 'verify-result fail';
-          resultEl.style.display = 'block';
-          resultEl.innerHTML = `
-            <div class="result-status">✗ HASH_MISMATCH</div>
-            <div class="result-details">Hash field does not match any known HDR artifact.</div>
-          `;
+          resultEl.className = 'v-result fail';
+          resultEl.innerHTML = '<div class="v-status">✗ NOT FOUND</div><div class="v-detail">Decision ID not found in the live backend. The artifact may not exist or may belong to a private deployment.</div>';
         }
       } catch(e) {
-        resultEl.className = 'verify-result fail';
-        resultEl.style.display = 'block';
-        resultEl.innerHTML = `
-          <div class="result-status">✗ INVALID_JSON</div>
-          <div class="result-details">Could not parse JSON input.</div>
-        `;
+        resultEl.className = 'v-result fail';
+        resultEl.innerHTML = '<div class="v-status">✗ CONNECTION ERROR</div><div class="v-detail">Could not reach backend. Check your connection.</div>';
       }
     }
 
-    function downloadReport() {
-      const report = {
-        reportType: "HDR_VERIFICATION_REPORT",
-        verifiedAt: new Date().toISOString(),
-        verifier: "heillon-public-verifier-v1",
-        artifact: { cycleId: "CCR-03", hash: CCR03_HASH },
-        result: "PROOF_VERIFIED",
-        chainStatus: "INTACT",
-        phase: "CONSTITUTIONAL_ACTIVE",
-        nloLevel: 4,
-        reportNote: "Generated by HEILLON Public Verifier. This report is itself an HDR-compatible record."
-      };
-      const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'CCR-03_verification_report.json';
-      a.click();
-      URL.revokeObjectURL(url);
+    // Download live HDR
+    async function downloadCCR() {
+      try {
+        const r = await fetch(BACKEND + '/health', { signal: AbortSignal.timeout(5000) });
+        const d = await r.json();
+        const artifact = {
+          hdr_version: '2.0',
+          protocol: 'HDR-HEILLON-V2',
+          dimension_1_fact: {
+            system: 'HEILLON Command Center',
+            constitutional_phase: d.constitutional_phase,
+            total_events: d.statistics?.total_events,
+            chain_intact: d.database?.initialized
+          },
+          dimension_2_authority: {
+            schema_version: d.schema_version || 'M2+M3+Guard+HSC',
+            tables_found: d.database?.tables_found,
+            nlo_max: 5
+          },
+          dimension_3_normative_context: {
+            jurisdictions: ['BR', 'UAE', 'EU'],
+            total_norms: 13,
+            corpus_version: 'v1.0-2026'
+          },
+          verified_at: new Date().toISOString(),
+          verifier: 'hdr.heillon.com/public-verifier-v2',
+          backend: BACKEND
+        };
+        const blob = new Blob([JSON.stringify(artifact, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'heillon_hdr_v2_live.json'; a.click();
+        URL.revokeObjectURL(url);
+      } catch(e) {
+        alert('Backend offline — try again shortly.');
+      }
     }
 
-    function copyHash() {
-      navigator.clipboard.writeText(CCR03_HASH);
-      const btn = document.getElementById('btn-copy-hash');
-      btn.textContent = 'copied';
-      setTimeout(() => { btn.textContent = 'copy'; }, 2000);
-    }
+    // Reveal on scroll
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-    function animateCount(el, target, duration) {
-      duration = duration || 1200;
-      let start = 0;
-      const step = target / (duration / 16);
-      const timer = setInterval(() => {
-        start = Math.min(start + step, target);
-        el.textContent = Math.floor(start);
-        if (start >= target) clearInterval(timer);
-      }, 16);
-    }
-
-    const metricsObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateCount(document.getElementById('metric-tests'), 27);
-          metricsObserver.disconnect();
-        }
-      });
-    }, { threshold: 0.3 });
-    const metricsEl = document.getElementById('metrics');
-    if (metricsEl) metricsObserver.observe(metricsEl);
-
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) e.target.classList.add('visible');
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    // Init
+    checkBackend();
   </script>
 </body>
 </html>
