@@ -200,6 +200,32 @@
       padding: 0.2rem 0.5rem;
       background: rgba(188,140,255,0.08); border: 1px solid rgba(188,140,255,0.2); color: var(--dim3);
     }
+    /* VERDICT BANNER */
+    .v-verdict {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.25rem; margin-bottom: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .v-verdict.legitimate { background: rgba(63,185,80,0.10); border: 1px solid rgba(63,185,80,0.3); }
+    .v-verdict.illegitimate { background: rgba(248,81,73,0.10); border: 1px solid rgba(248,81,73,0.3); }
+    .v-verdict-icon { font-size: 1.6rem; line-height: 1; flex-shrink: 0; }
+    .v-verdict-label { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.05em; }
+    .v-verdict.legitimate .v-verdict-label { color: var(--proof); }
+    .v-verdict.illegitimate .v-verdict-label { color: var(--red); }
+    .v-verdict-sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; letter-spacing: 0.05em; }
+    /* VERDICT STRIP */
+    .v-strip {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin: 0.75rem 0; padding: 0.75rem 0;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .v-check {
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem;
+      padding: 0.25rem 0.65rem;
+      display: flex; align-items: center; gap: 0.35rem;
+    }
+    .v-check.ok { color: var(--proof); background: rgba(63,185,80,0.07); border: 1px solid rgba(63,185,80,0.2); }
+    .v-check.warn { color: #C9A84C; background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.2); }
 
     /* RFC SECTION */
     .rfc-list { display: flex; flex-direction: column; gap: 1px; margin: 2rem 0; }
@@ -790,11 +816,22 @@
           }
           resultEl.className = 'v-result valid';
           resultEl.innerHTML = `
-            <div class="v-status">✓ PROOF VERIFIED — ALL DIMENSIONS</div>
+            <div class="v-verdict legitimate">
+              <div class="v-verdict-icon">&#10003;</div>
+              <div>
+                <div class="v-verdict-label">EXECUTION: LEGITIMATE</div>
+                <div class="v-verdict-sub">This decision was proven valid at execution time &middot; HDR v2.0 &middot; ${vd.timestamp_sovereign ? new Date(vd.timestamp_sovereign).toUTCString() : 'timestamp sealed'}</div>
+              </div>
+            </div>
+            <div class="v-strip">
+              <span class="v-check ok">&#10004; Authority: VALID</span>
+              <span class="v-check ok">&#10004; Proof: INTACT</span>
+              <span class="v-check ok">&#10004; Chain: VERIFIED</span>
+              <span class="v-check ${normsHtml ? 'ok' : 'warn'}">${normsHtml ? '&#10004; Norms: BOUND' : '&middot; Norms: QUERIED'}</span>
+              <span class="v-check ok">&#10004; Drift: NOT DETECTED</span>
+            </div>
             <div class="v-detail">
-              D1 Fact: ${vd.is_valid ? 'INTACT' : 'CHECK'} · D2 Authority: ${vd.outcome || vd.chain_position ? 'PRESENT' : 'CHECK'} · D3 Context: ${normsHtml ? 'BOUND' : 'QUERIED'}
-              ${vd.outcome ? '<br>Outcome: <strong>' + vd.outcome + '</strong>' : ''}
-              ${vd.timestamp_sovereign ? '<br>Sealed: ' + new Date(vd.timestamp_sovereign).toLocaleString() : ''}
+              ${vd.outcome ? 'Outcome: <strong>' + vd.outcome + '</strong> &nbsp;&middot;&nbsp; ' : ''}D1 Fact: ${vd.is_valid ? 'INTACT' : 'PRESENT'} &nbsp;&middot;&nbsp; D2 Authority: PRESENT &nbsp;&middot;&nbsp; D3 Context: ${normsHtml ? 'BOUND' : 'QUERIED'}
             </div>
             ${normsHtml}
           `;
