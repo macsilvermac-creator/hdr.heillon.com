@@ -357,6 +357,33 @@
         <a href="#rfc" class="btn btn-dim3">RFC-0002 · RFC-0003</a>
       </div>
       <p class="hero-note">No account. No form. No paywall. The protocol is open.</p>
+
+      <!-- APP DOWNLOAD — bloqueado até 03/04 -->
+      <div id="hdr-app-wrap" style="margin-top:1rem;">
+        <a id="hdr-app-btn" href="https://heillon.com/app.html"
+          style="display:inline-flex;align-items:center;gap:.6rem;font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:.12em;text-transform:uppercase;padding:.65rem 1.3rem;border:1px solid rgba(201,168,76,.3);color:var(--gold);text-decoration:none;background:rgba(201,168,76,.06);transition:all .2s;"
+          onmouseover="this.style.background='rgba(201,168,76,.12)'" onmouseout="this.style.background='rgba(201,168,76,.06)'">
+          <span style="font-family:Georgia,serif;font-size:1.1rem;line-height:1;font-weight:300;">H</span>
+          <span>↓ App — abre 03/04</span>
+          <span id="hdr-app-cd" style="font-size:.6rem;color:rgba(201,168,76,.55);margin-left:.2rem;"></span>
+        </a>
+      </div>
+      <script>
+      (function(){
+        var LAUNCH = new Date('2026-04-03T00:00:00-03:00').getTime()
+        var btn = document.getElementById('hdr-app-btn')
+        var cd  = document.getElementById('hdr-app-cd')
+        function tick(){
+          var diff = LAUNCH - Date.now()
+          if(diff <= 0){ cd.textContent='● LIVE'; cd.style.color='#40916C'; return }
+          btn.onclick=function(e){ e.preventDefault(); }
+          var d=Math.floor(diff/86400000), h=Math.floor((diff%86400000)/3600000), m=Math.floor((diff%3600000)/60000)
+          cd.textContent = d+'d '+h+'h '+m+'m'
+          setTimeout(tick, 60000)
+        }
+        tick()
+      })()
+      </script>
     </div>
     <div class="dim-card reveal delay-1">
       <div class="dim-card-header">
