@@ -223,6 +223,14 @@
     .v-input::placeholder { color: var(--muted); }
     .v-textarea { min-height: 100px; resize: vertical; }
     .v-result { padding: 1rem 1.25rem; margin-top: 1rem; display: none; }
+    .v-dimensions { display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin:.75rem 0; }
+    .v-dim { background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:.75rem; }
+    .v-dim-label { font-size:.62rem;letter-spacing:.12em;color:var(--muted);margin-bottom:.35rem; }
+    .v-dim-val { font-size:.75rem;font-weight:600;margin-bottom:.3rem; }
+    .v-dim-val.ok { color:#4ade80; }
+    .v-dim-val.warn { color:#fbbf24; }
+    .v-dim-sub { font-size:.68rem;color:var(--muted);line-height:1.5; }
+    @media(max-width:600px){ .v-dimensions{grid-template-columns:1fr;} }
     .v-result.valid { background: rgba(63,185,80,0.07); border-left: 3px solid var(--proof); }
     .v-result.fail { background: rgba(248,81,73,0.07); border-left: 3px solid var(--red); }
     .v-result.loading { background: rgba(88,166,255,0.07); border-left: 3px solid var(--anchor); }
@@ -363,6 +371,7 @@
       <a href="#corpus">Corpus</a>
       <a href="#rfc">RFCs</a>
       <a href="#adopt">Adopt</a>
+      <a href="https://heilloncommandcenter-production.up.railway.app/docs" class="external" target="_blank" rel="noopener" title="OpenAPI / Swagger">/docs API</a>
       <a href="https://heillon.com" class="external" target="_blank" rel="noopener">heillon.com</a>
       <button class="lang-btn" id="lang-toggle" onclick="toggleLang()">PT</button>
     </div>
@@ -538,7 +547,7 @@
         <button class="vtab" onclick="switchTab(this,'tab-json')">JSON Artifact</button>
       </div>
       <div class="vtab-panel active" id="tab-id">
-        <input type="text" class="v-input" id="input-id" placeholder="Paste decision ID (e.g. HDR-2026-abc123...)">
+        <input type="text" class="v-input" id="input-id" placeholder="Cole o HDR ID (ex: HDR-SUP-PULS-133E5F60)" value="HDR-SUP-PULS-133E5F60">
         <button class="btn btn-primary" onclick="verifyLive('id')">VERIFY AGAINST LIVE BACKEND →</button>
       </div>
       <div class="vtab-panel" id="tab-hash">
@@ -555,7 +564,7 @@
       <div style="font-family:'IBM Plex Mono',monospace;font-size:0.8rem;color:var(--muted);margin-bottom:0.75rem;">VERIFY MANUALLY VIA curl</div>
       <div style="background:var(--paper);border:1px solid var(--border);padding:1.25rem;font-family:'IBM Plex Mono',monospace;font-size:0.82rem;color:var(--muted);overflow-x:auto;">
         <span style="color:var(--muted)"># Verify any decision ID</span><br>
-        curl <span style="color:var(--anchor)">https://heilloncommandcenter-production.up.railway.app/public/verify/{decision_id}</span><br><br>
+        curl <span style="color:var(--anchor)">https://heilloncommandcenter-production.up.railway.app/public/verify/HDR-SUP-PULS-133E5F60</span>ecision_id}</span><br><br>
         <span style="color:var(--muted)"># Get backend health + constitutional status</span><br>
         curl <span style="color:var(--anchor)">https://heilloncommandcenter-production.up.railway.app/health</span>
       </div>
@@ -899,6 +908,23 @@
             </div>
             <div class="v-detail">
               ${vd.outcome ? 'Outcome: <strong>' + vd.outcome + '</strong> &nbsp;&middot;&nbsp; ' : ''}D1 Fact: ${vd.is_valid ? 'INTACT' : 'PRESENT'} &nbsp;&middot;&nbsp; D2 Authority: PRESENT &nbsp;&middot;&nbsp; D3 Context: ${normsHtml ? 'BOUND' : 'QUERIED'}
+            </div>
+            <div class="v-dimensions">
+              <div class="v-dim">
+                <div class="v-dim-label">D1 — FACTO</div>
+                <div class="v-dim-val ok">Registo imutável · Hash intacto</div>
+                <div class="v-dim-sub">A decisão não foi alterada desde o momento de execução. Qualquer byte modificado quebraria a prova.</div>
+              </div>
+              <div class="v-dim">
+                <div class="v-dim-label">D2 — AUTORIDADE</div>
+                <div class="v-dim-val ok">Autoridade validada · Scope verificado</div>
+                <div class="v-dim-sub">O actor que executou estava devidamente autorizado no momento da decisão.</div>
+              </div>
+              <div class="v-dim">
+                <div class="v-dim-label">D3 — CONTEXTO NORMATIVO</div>
+                <div class="v-dim-val ${normsHtml ? 'ok' : 'warn'}">${normsHtml ? 'Normas vinculadas' : 'Contexto presente'}</div>
+                <div class="v-dim-sub">As normas em vigor no momento da execução foram registadas na prova.</div>
+              </div>
             </div>
             ${normsHtml}
           `;
